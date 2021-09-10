@@ -90,4 +90,19 @@ public class ContactCreation {
             System.out.println(e);
         }
     }
+
+    public void deleteContact() {
+        try {
+            contactInfo.setFirstName(null);
+            contactInfo.setLastName(null);
+            contactInfo.setAddress(null);
+            contactInfo.setCity(null);
+            contactInfo.setState(null);
+            contactInfo.setZip(0);
+            contactInfo.setPhoneNo(0);
+            contactInfo.setEmail(null);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
 }
