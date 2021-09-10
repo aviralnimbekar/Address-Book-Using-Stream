@@ -9,5 +9,6 @@ public class AddressBook {
 
         ContactCreation contactCreation = new ContactCreation();
         contactCreation.addContact();
+        contactCreation.editPerson();
     }
 }
