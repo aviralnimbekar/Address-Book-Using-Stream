@@ -1,5 +1,6 @@
 package com.bridgelabz;
 
+import java.util.LinkedList;
 import java.util.Scanner;
 
 public class ContactCreation {
@@ -36,6 +37,11 @@ public class ContactCreation {
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
+
+    public void displayContact(LinkedList<ContactInfo> contactList) {
+        System.out.println("All contact =  " + contactList.size());
+        System.out.println(contactList);
     }
 
     public void editPerson() {
