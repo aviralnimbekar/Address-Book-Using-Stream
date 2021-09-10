@@ -85,6 +85,6 @@ public class ContactInfo {
                 ", zip=" + zip +
                 ", phoneNo=" + phoneNo +
                 ", email='" + email + '\'' +
-                '}' + "\"" ;
+                '}' + "\n" ;
     }
 }
