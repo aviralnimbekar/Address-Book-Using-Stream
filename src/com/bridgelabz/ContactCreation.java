@@ -1,6 +1,7 @@
 package com.bridgelabz;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class ContactCreation {
     static Scanner scanner = new Scanner(System.in);
@@ -130,10 +131,14 @@ public class ContactCreation {
                 String email = scanner.next();
                 contactInfo.setEmail(email);
                 contactList.add(contactInfo);
+                contactList = contactList
+                        .stream()
+                        .sorted(Comparator.comparing(ContactInfo::getFirstName))
+                        .collect(Collectors.toList());
             } else
                 System.out.println("Name already exists");
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
         return contactList;
     }
