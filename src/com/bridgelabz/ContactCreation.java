@@ -4,7 +4,7 @@ import java.util.*;
 
 public class ContactCreation {
     static Scanner scanner = new Scanner(System.in);
-    private Map<String, List<ContactInfo>> addressBooks = new HashMap<>();
+    Map<String, List<ContactInfo>> addressBooks = new HashMap<>();
 
     protected void MultipleAddressBook() {
         try {
@@ -20,7 +20,10 @@ public class ContactCreation {
                         System.out.println("Enter name for Address book");
                         String newBookName = scanner.next();
                         List<ContactInfo> contactList = new LinkedList<>();
-                        MultipleContact(contactList, addressBooks, newBookName);
+                        if (addressBooks.containsKey(newBookName))
+                            System.out.println("Book already exists");
+                        else
+                            MultipleContact(contactList, addressBooks, newBookName);
                         break;
                     case 2:
                         System.out.println(addressBooks.keySet());
@@ -86,33 +89,37 @@ public class ContactCreation {
 
     private List<ContactInfo> addContact(List<ContactInfo> contactList) {
         try {
-            ContactInfo contactInfo = new ContactInfo();
             System.out.println("Enter following details \n" +
                     "First Name :");
             String firstName = scanner.next();
-            System.out.println("Last Name :");
-            String lastName = scanner.next();
-            System.out.println("Address :");
-            String address = scanner.next();
-            System.out.println("City :");
-            String city = scanner.next();
-            System.out.println("State :");
-            String state = scanner.next();
-            System.out.println("Zip Code :");
-            int zip = scanner.nextInt();
-            System.out.println("Phone Number :");
-            long phoneNo = scanner.nextLong();
-            System.out.println("Email :");
-            String email = scanner.next();
-            contactInfo.setFirstName(firstName);
-            contactInfo.setLastName(lastName);
-            contactInfo.setAddress(address);
-            contactInfo.setCity(city);
-            contactInfo.setState(state);
-            contactInfo.setZip(zip);
-            contactInfo.setPhoneNo(phoneNo);
-            contactInfo.setEmail(email);
-            contactList.add(contactInfo);
+            int existingName = searchName(contactList, firstName);
+            if (existingName == -1) {
+                ContactInfo contactInfo = new ContactInfo();
+                contactInfo.setFirstName(firstName);
+//                System.out.println("Last Name :");
+//                String lastName = scanner.next();
+//                contactInfo.setLastName(lastName);
+//                System.out.println("Address :");
+//                String address = scanner.next();
+//                contactInfo.setAddress(address);
+                System.out.println("City :");
+                String city = scanner.next();
+                contactInfo.setCity(city);
+//                System.out.println("State :");
+//                String state = scanner.next();
+//                contactInfo.setState(state);
+//                System.out.println("Zip Code :");
+//                int zip = scanner.nextInt();
+//                contactInfo.setZip(zip);
+//                System.out.println("Phone Number :");
+//                long phoneNo = scanner.nextLong();
+//                contactInfo.setPhoneNo(phoneNo);
+//                System.out.println("Email :");
+//                String email = scanner.next();
+//                contactInfo.setEmail(email);
+                contactList.add(contactInfo);
+            } else
+                System.out.println("Name already exists");
         } catch (Exception e) {
             System.out.println(e);
         }
