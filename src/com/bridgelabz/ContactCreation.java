@@ -107,29 +107,22 @@ public class ContactCreation {
             String firstName = scanner.next();
             int existingName = searchName(contactList, firstName);
             if (existingName == -1) {
-                ContactInfo contactInfo = new ContactInfo();
-                contactInfo.setFirstName(firstName);
                 System.out.println("Last Name :");
                 String lastName = scanner.next();
-                contactInfo.setLastName(lastName);
                 System.out.println("Address :");
                 String address = scanner.next();
-                contactInfo.setAddress(address);
                 System.out.println("City :");
                 String city = scanner.next();
-                contactInfo.setCity(city);
                 System.out.println("State :");
                 String state = scanner.next();
-                contactInfo.setState(state);
                 System.out.println("Zip Code :");
                 int zip = scanner.nextInt();
-                contactInfo.setZip(zip);
                 System.out.println("Phone Number :");
                 long phoneNo = scanner.nextLong();
-                contactInfo.setPhoneNo(phoneNo);
                 System.out.println("Email :");
                 String email = scanner.next();
-                contactInfo.setEmail(email);
+                ContactInfo contactInfo = new ContactInfo(firstName,
+                        lastName, address, city, state, zip, phoneNo, email);
                 contactList.add(contactInfo);
                 contactList = contactList
                         .stream()
