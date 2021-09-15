@@ -14,8 +14,8 @@ public class ContactCreation {
                         "1. Crate new address book \n" +
                         "2. Continue with existing address book \n" +
                         "3. All books \n" +
-                        "4. search contact in city \n" +
-                        "5. search contact in state \n" +
+                        "4. search contact in Location \n" +
+                        "5. Sort contact\n" +
                         "0. EXIT");
                 int choice = scanner.nextInt();
                 switch (choice) {
@@ -47,14 +47,10 @@ public class ContactCreation {
                         System.out.println("\n" + addressBooks);
                         break;
                     case 4:
-                        System.out.println("Enter Name for City");
-                        String nameForCity = scanner.next();
-                        searchAcrossCity(nameForCity);
+                        searchAcrossLocation();
                         break;
                     case 5:
-                        System.out.println("Enter Name for State");
-                        String nameForState = scanner.next();
-                        searchAcrossState(nameForState);
+                        sortContact();
                         break;
                     default:
                         System.exit(0);
@@ -239,39 +235,94 @@ public class ContactCreation {
         return -1;
     }
 
-    private void searchAcrossCity(String contactsInCity) {
+    private void searchAcrossLocation() {
         try {
-            for (String keyOfBook : addressBooks.keySet()) {
-                long noOfContactsInCity = addressBooks.get(keyOfBook)
-                        .stream()
-                        .filter(contactInfo -> contactsInCity.equals(contactInfo.getCity()))
-                        .count();
-                System.out.println("Number of contact in city = " + noOfContactsInCity);
-                addressBooks.get(keyOfBook)
-                        .stream()
-                        .filter(contactInfo -> contactsInCity.equals(contactInfo.getCity()))
-                        .forEach(System.out::println);
+            boolean run = true;
+            while (run) {
+                System.out.println("How Would you like to Search\n" +
+                        "1. By City\n" +
+                        "2. By State\n" +
+                        "0. EXIT");
+                int choice = scanner.nextInt();
+                switch (choice) {
+                    case 1:
+                        System.out.println("Enter Name for City");
+                        String contactsInCity = scanner.next();
+                        addressBooks.keySet().forEach(keyOfBook -> {
+                            long noOfContactsInCity = addressBooks.get(keyOfBook)
+                                    .stream()
+                                    .filter(contactInfo -> contactsInCity.equals(contactInfo.getCity()))
+                                    .count();
+                            System.out.println("Number of contact in city = " + noOfContactsInCity);
+                            addressBooks.get(keyOfBook)
+                                    .stream()
+                                    .filter(contactInfo -> contactsInCity.equals(contactInfo.getCity()))
+                                    .forEach(System.out::println);
+                        });
+                        break;
+                    case 2:
+                        System.out.println("Enter Name for State");
+                        String contactsInState = scanner.next();
+                        addressBooks.keySet().forEach(keyOfBook -> {
+                            long noOfContactsInState = addressBooks.get(keyOfBook)
+                                    .stream()
+                                    .filter(contactInfo -> contactsInState.equals(contactInfo.getState()))
+                                    .count();
+                            System.out.println("Number of contact in city = " + noOfContactsInState);
+                            addressBooks.get(keyOfBook)
+                                    .stream()
+                                    .filter(contactInfo -> contactsInState.equals(contactInfo.getState()))
+                                    .forEach(System.out::println);
+                        });
+                        break;
+                    case 0:
+                        run = false;
+                        break;
+                }
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
 
-    private void searchAcrossState(String contactsInState) {
-        try {
-            for (String keyOfBook : addressBooks.keySet()) {
-                long noOfContactsInState = addressBooks.get(keyOfBook)
-                        .stream()
-                        .filter(contactInfo -> contactsInState.equals(contactInfo.getState()))
-                        .count();
-                System.out.println("Number of contact in city = " + noOfContactsInState);
-                addressBooks.get(keyOfBook)
-                        .stream()
-                        .filter(contactInfo -> contactsInState.equals(contactInfo.getState()))
-                        .forEach(System.out::println);
+    private void sortContact() {
+        boolean run = true;
+        while (run) {
+            System.out.println("How Would you like to sort\n" +
+                    "1. By City\n" +
+                    "2. By State\n" +
+                    "3. By Zip\n" +
+                    "0. EXIT");
+            int choice = scanner.nextInt();
+            switch (choice) {
+                case 1:
+                    addressBooks.keySet().forEach(keyOfBook -> {
+                        addressBooks.get(keyOfBook)
+                                .stream()
+                                .sorted(Comparator.comparing(ContactInfo::getCity))
+                                .forEach(System.out::println);
+                    });
+                    break;
+                case 2:
+                    addressBooks.keySet().forEach(keyOfBook -> {
+                        addressBooks.get(keyOfBook)
+                                .stream()
+                                .sorted(Comparator.comparing(ContactInfo::getState))
+                                .forEach(System.out::println);
+                    });
+                    break;
+                case 3:
+                    addressBooks.keySet().forEach(keyOfBook -> {
+                        addressBooks.get(keyOfBook)
+                                .stream()
+                                .sorted(Comparator.comparing(ContactInfo::getZip))
+                                .forEach(System.out::println);
+                    });
+                    break;
+                case 0:
+                    run = false;
+                    break;
             }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
         }
     }
 }
