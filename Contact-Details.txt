@@ -1,0 +1,8 @@
+
+college --->
+First-Name=amarjeet, Last-Name=gupta, Address=bhilai, City=bhilai, State=cg, Zip-Code=123, Phone-No=987, Email=@gmail.com
+First-Name=aniruddha, Last-Name=mishra, Address=dgg, City=dgg, State=cg, Zip-Code=456, Phone-No=98765, Email=@gmaill.com
+First-Name=nikhil, Last-Name=yadav, Address=bhilai, City=bhilai, State=cg, Zip-Code=123, Phone-No=987, Email=@gmail.com
+
+school --->
+First-Name=hemant, Last-Name=patel, Address=bl, City=raipur, State=cg, Zip-Code=345, Phone-No=987612, Email=@yahoo

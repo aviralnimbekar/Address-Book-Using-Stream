@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 public class ContactCreation {
     static Scanner scanner = new Scanner(System.in);
     Map<String, List<ContactInfo>> addressBooks = new HashMap<>();
+    AddressBookIOService addressBookIOService = new AddressBookIOService();
 
     protected void MultipleAddressBook() {
         try {
@@ -27,6 +28,7 @@ public class ContactCreation {
                             System.out.println("Book already exists");
                         else
                             MultipleContact(contactList, addressBooks, newBookName);
+                        addressBookIOService.writeContactInfo(addressBooks);
                         break;
                     case 2:
                         System.out.println(addressBooks.keySet());
@@ -61,7 +63,7 @@ public class ContactCreation {
         }
     }
 
-    private void MultipleContact(List<ContactInfo> contactList, Map<String, List<ContactInfo>> addressBook, String newBook) {
+    private void MultipleContact(List<ContactInfo> contactList, Map<String, List<ContactInfo>> addressBooks, String newBook) {
         try {
             boolean run = true;
             while (run) {
@@ -75,7 +77,7 @@ public class ContactCreation {
                 switch (choice) {
                     case 1:
                         List<ContactInfo> multiContactInBook = addContact(contactList);
-                        addressBook.put(newBook, multiContactInBook);
+                        addressBooks.put(newBook, multiContactInBook);
                         break;
                     case 2:
                         displayContact(contactList);
@@ -91,6 +93,7 @@ public class ContactCreation {
                         break;
                 }
             }
+            addressBookIOService.writeContactInfo(addressBooks);
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -268,7 +271,7 @@ public class ContactCreation {
                                     .stream()
                                     .filter(contactInfo -> contactsInState.equals(contactInfo.getState()))
                                     .count();
-                            System.out.println("Number of contact in city = " + noOfContactsInState);
+                            System.out.println("Number of contact in state = " + noOfContactsInState);
                             addressBooks.get(keyOfBook)
                                     .stream()
                                     .filter(contactInfo -> contactsInState.equals(contactInfo.getState()))
@@ -296,28 +299,22 @@ public class ContactCreation {
             int choice = scanner.nextInt();
             switch (choice) {
                 case 1:
-                    addressBooks.keySet().forEach(keyOfBook -> {
-                        addressBooks.get(keyOfBook)
-                                .stream()
-                                .sorted(Comparator.comparing(ContactInfo::getCity))
-                                .forEach(System.out::println);
-                    });
+                    addressBooks.keySet().forEach(keyOfBook -> addressBooks.get(keyOfBook)
+                            .stream()
+                            .sorted(Comparator.comparing(ContactInfo::getCity))
+                            .forEach(System.out::println));
                     break;
                 case 2:
-                    addressBooks.keySet().forEach(keyOfBook -> {
-                        addressBooks.get(keyOfBook)
-                                .stream()
-                                .sorted(Comparator.comparing(ContactInfo::getState))
-                                .forEach(System.out::println);
-                    });
+                    addressBooks.keySet().forEach(keyOfBook -> addressBooks.get(keyOfBook)
+                            .stream()
+                            .sorted(Comparator.comparing(ContactInfo::getState))
+                            .forEach(System.out::println));
                     break;
                 case 3:
-                    addressBooks.keySet().forEach(keyOfBook -> {
-                        addressBooks.get(keyOfBook)
-                                .stream()
-                                .sorted(Comparator.comparing(ContactInfo::getZip))
-                                .forEach(System.out::println);
-                    });
+                    addressBooks.keySet().forEach(keyOfBook -> addressBooks.get(keyOfBook)
+                            .stream()
+                            .sorted(Comparator.comparing(ContactInfo::getZip))
+                            .forEach(System.out::println));
                     break;
                 case 0:
                     run = false;
